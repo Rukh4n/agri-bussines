@@ -1,6 +1,6 @@
 import React from "react";
 
-function SongTable() {
+const Article = () => {
     return (
         <div className="flex justify-center">
             <table className="table-auto">
@@ -33,4 +33,4 @@ function SongTable() {
     );
 }
 
-export default SongTable;
+export default Article;

@@ -14,8 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::class;
-        return response()->json($categories);
+        //
     }
 
     /**
@@ -23,7 +22,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Category/CreateCategory');
+        $categories = Category::orderBy('created_at', 'desc')->get();
+        return Inertia::render('Category/CreateCategory', [
+            'categories'=> $categories,
+        ]);
     }
 
     /**

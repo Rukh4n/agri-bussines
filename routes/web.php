@@ -27,11 +27,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     // CATEGORY
-    Route::get('category/create', [CategoryController::class, 'create']);
+    Route::get('category/create', [CategoryController::class, 'create', 'index']);
     Route::post('category/post', [CategoryController::class, 'store']);
     // ARTICLE
     Route::get('article', [ArticleController::class, 'index']);
     Route::get('article/create', [ArticleController::class, 'create']);
+    Route::post('article/post', [ArticleController::class, 'store']);
 });
 
 // EMAIL NOTIFICATION

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Models\Category;
 use Inertia\Inertia;
 
 class ArticleController extends Controller
@@ -22,7 +23,10 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Article/CreateArticle');
+        $categories = Category::all();
+        return Inertia::render('Article/CreateArticle', [
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -30,7 +34,14 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
-        //
+    
+        $user_id = auth()->user()->id;
+        $article = Article::create([
+            'user_id' => $user_id,
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'category_id' => $request->category,
+        ]);
     }
 
     /**
