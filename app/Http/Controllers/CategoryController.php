@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -13,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::class;
+        return response()->json($categories);
     }
 
     /**
@@ -21,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Category/CreateCategory');
     }
 
     /**
@@ -29,8 +31,18 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        $category = Category::create([
+            'name' => $request->name,
+            'slug' => $request->slug,
+        ]);
+        
+
+        // return response()->json([
+        //     'message' => 'Data berhasil disimpan (Data saved successfully)', // Indonesian success message
+        //     'data' => $category,
+        // ], 201);
     }
+
 
     /**
      * Display the specified resource.
