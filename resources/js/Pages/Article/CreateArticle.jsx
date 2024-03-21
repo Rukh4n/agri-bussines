@@ -4,6 +4,7 @@ import { router } from "@inertiajs/react";
 const CreateArticle = ({ categories }) => {
     const [formData, setFormData] = useState({
         title: "",
+        image: "",
         description: "",
         category: "",
     });
@@ -18,10 +19,15 @@ const CreateArticle = ({ categories }) => {
         e.preventDefault();
 
         // Use router.post to submit form data to the server
-        router.post('post', formData); // Assuming route name is 'articles.store'
-
+        // router.post('post', formData); // Assuming route name is 'articles.store'
+        console.log(formData);
         // Optional: Reset form data after successful submission
-        setFormData({ title: "", description: "", category: "" });
+        setFormData({ 
+            title: "",
+            image: "",
+            description: "",
+            category: "" 
+        });
     };
 
     return (
@@ -42,6 +48,21 @@ const CreateArticle = ({ categories }) => {
                             onChange={handleChange}
                         />
                     </div>
+
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
+                            Gambar
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="image"
+                            name="image"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleChange}
+                        />
+                    </div>
+
                     <div className="mb-6">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
                             Deskripsi
