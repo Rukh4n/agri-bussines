@@ -11,10 +11,11 @@ class Article extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    
     protected $fileble = [
         'user_id',
         'title',
-        'descriprion',
+        'description',
         'category_id',
     ];
     // RELATED TO TABLE CATEGORY

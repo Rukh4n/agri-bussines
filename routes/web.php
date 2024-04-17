@@ -33,6 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::get('article', [ArticleController::class, 'index']);
     Route::get('article/create', [ArticleController::class, 'create']);
     Route::post('article/post', [ArticleController::class, 'store']);
+    Route::get('article/edit/{slug}', [ArticleController::class, 'edit']);
+    Route::patch('article/update/{slug}', [ArticleController::class, 'update']);
+    Route::delete('article/destroy/{slug}', [ArticleController::class, 'destroy']);
 });
 
 // EMAIL NOTIFICATION
