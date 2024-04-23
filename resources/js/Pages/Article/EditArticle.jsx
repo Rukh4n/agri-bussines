@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { router } from "@inertiajs/react";
 
-const EditArticle = ({ categories, article }) => {
+const EditArticle = ({ categories, article, csrf_token }) => {
+
     const [formData, setFormData] = useState({
         title: article.title,
         description: article.description,
@@ -17,7 +18,11 @@ const EditArticle = ({ categories, article }) => {
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.patch(`/article/update/${article.slug}`, formData);
+        router.patch(`/article/update/${article.slug}`, formData, {
+            headers: {
+                'X-CSRF-TOKEN': csrf_token
+            }
+        });
     };
 
     return (

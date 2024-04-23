@@ -30,6 +30,11 @@ const CreateArticle = ({ categories }) => {
         data.append('description', formData.description);
         data.append('category_id', formData.category);
 
+        // Log formData
+        console.log("Form Data:", formData);
+
+        // Log data to be submitted
+        console.log("Submitted Data:", Object.fromEntries(data.entries()));
 
         // Use Inertia.post to submit form data to the server
         router.post('/article/post', data);

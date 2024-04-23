@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { router } from '@inertiajs/react'
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 const CreateCategory = ({ categories }) => {
     const [name, setName] = useState("");
@@ -31,6 +32,7 @@ const CreateCategory = ({ categories }) => {
 
     return (
         <>
+        <AuthenticatedLayout/>
             <div className="flex justify-center items-center h-screen">
                 <form className="w-full max-w-sm bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
                     <h1 className="mt-4">Tambah Category</h1>

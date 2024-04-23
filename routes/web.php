@@ -18,6 +18,13 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/blog', [ArticleController::class, 'listArticles']);
+Route::get('/blog/{slug}', [ArticleController::class, 'show']);
+// Category
+Route::get('/blog_kategori', [CategoryController::class, 'listCategories']);
+Route::get('/blog_categori/{slug}', [CategoryController::class, 'show']);
+
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

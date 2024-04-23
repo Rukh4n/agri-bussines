@@ -13,9 +13,9 @@ class Category extends Model
     protected $fileble = ['name', 'slug'];
 
     protected $guarded = ['id'];
-    
-    public function article():HasMany
+
+    public function articles(): HasMany
     {
-        return $this->hasMany(Article::class, 'foreign_key');
+        return $this->hasMany(Article::class, 'category_id');
     }
 }

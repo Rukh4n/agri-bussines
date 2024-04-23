@@ -43,40 +43,41 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
-        if (!$request->hasFile('image')) {
-            return redirect()->back()->with('error', 'Anda harus mengunggah gambar.');
-        }
-
-        $image = $request->file('image');
-        $fileName = date('YmdHis') . uniqid() . '.' . $image->getClientOriginalExtension();
-        $filePath = $image->storeAs('public/articles', $fileName);
 
         $user_id = auth()->user()->id;
 
-        $slug = Str::slug($request->title, '-') . '-' . uniqid();
+        // $slug = Str::slug($request->title, '-') . '-' . uniqid();
 
         $article = Article::create([
             'user_id' => $user_id,
             'title' => $request->title,
-            'slug' => $slug,
+            'slug' => $request->slug,
             'category_id' => $request->category_id,
             'description' => $request->description,
-            'image' => $filePath,
         ]);
-
-        if ($article) {
-            return redirect()->route('articles.index')->with('success', 'Artikel berhasil disimpan.');
-        } else {
-            return redirect()->back()->with('error', 'Gagal menyimpan artikel.');
-        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Article $article)
+    public function show($slug)
     {
-        //
+        $article = Article::where('slug', $slug)->firstOrFail();
+
+        return Inertia::render('Article/userArticle', [
+            'article' => $article,
+        ]);
+    }
+
+    public function listArticles()
+    {
+        $articles = Article::orderBy('created_at', 'desc')->get();
+        $categories = Category::orderBy('created_at', 'desc')->get();
+
+        return Inertia::render('Article/userArticles', [
+            'categories' => $categories,
+            'articles' => $articles
+        ]);
     }
 
     /**
@@ -86,9 +87,12 @@ class ArticleController extends Controller
     {
         $article = Article::where('slug', $slug)->firstOrFail();
         $categories = Category::all();
+        $currentToken = session()->token();
+
         return Inertia::render('Article/EditArticle', [
             'article' => $article,
             'categories' => $categories,
+            'token' => $currentToken,
         ]);
     }
 
@@ -97,6 +101,7 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, $slug)
     {
+        $user_id = auth()->user()->id;
         dd($request->all());
     }
 
