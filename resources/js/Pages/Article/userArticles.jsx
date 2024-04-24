@@ -1,5 +1,6 @@
 import React from "react";
 import NavBar from "../../Components/Users/NavBar";
+import Footer from "@/Components/Users/Footer";
 
 const UserArticles = ({ articles, categories }) => {
     return (
@@ -22,6 +23,7 @@ const UserArticles = ({ articles, categories }) => {
                     );
                 })}
             </div>
+            <Footer/>
         </>
     );
 };

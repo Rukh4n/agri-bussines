@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "../Components/Users/NavBar";
-
+import Footer from "@/Components/Users/Footer";
 const Welcome = () => {
     return (
         <div className="min-h-screen bg-gray-800 text-white">
@@ -33,6 +33,7 @@ const Welcome = () => {
                     </div>
                 </div>
             </main>
+            <Footer/>
         </div>
     );
 };
