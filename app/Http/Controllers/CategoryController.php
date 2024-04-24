@@ -67,9 +67,8 @@ class CategoryController extends Controller
         $category = Category::where('slug', $slug)->firstOrFail();
 
         $category_id = $category->id;
-        // Mengambil artikel yang terkait dengan kategori
         $articles = Article::where('category_id', $category_id)->get();
-
+        // dd($articles);
         
         return Inertia::render('Category/userCategory', [
             'category' => $category,

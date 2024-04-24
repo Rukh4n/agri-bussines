@@ -22,7 +22,7 @@ Route::get('/blog', [ArticleController::class, 'listArticles']);
 Route::get('/blog/{slug}', [ArticleController::class, 'show']);
 // Category
 Route::get('/blog_kategori', [CategoryController::class, 'listCategories']);
-Route::get('/blog_categori/{slug}', [CategoryController::class, 'show']);
+Route::get('/blog_kategori/{slug}', [CategoryController::class, 'show']);
 
 
 Route::get('/dashboard', function () {

@@ -1,24 +1,30 @@
 import React from "react";
+import NavBar from "../../Components/Users/NavBar";
 
 const userCategory = ({ category, articles }) => {
-  
+
   const category_id = category.id
 
-  const filteredArticles = articles.filter(articles => articles.category_id === category_id)
-  
-  console.log(filteredArticles)
+  // const filteredArticles = articles.filter(articles => articles.category_id === category_id)
+
+  console.log(articles)
   return (
     <>
+      <NavBar />
       <section>
         <h1>{category.name}</h1>
         <div>
-          <ul>
-            {articles.map((article, index) => {
-              return(
-                <li key={index}>{article.name}</li>
-              )
-            })}
-          </ul>
+          {articles.map((article, index) => {
+            return (
+              <>
+                <div>
+                  <a href={`/blog/${article.slug}`}>
+                    <h4 key={index}>{article.title}</h4>
+                  </a>
+                </div>
+              </>
+            )
+          })}
         </div>
       </section>
     </>

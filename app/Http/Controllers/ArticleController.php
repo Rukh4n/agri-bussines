@@ -74,9 +74,10 @@ class ArticleController extends Controller
         $articles = Article::orderBy('created_at', 'desc')->get();
         $categories = Category::orderBy('created_at', 'desc')->get();
 
+        
         return Inertia::render('Article/userArticles', [
+            'articles' => $articles,
             'categories' => $categories,
-            'articles' => $articles
         ]);
     }
 
