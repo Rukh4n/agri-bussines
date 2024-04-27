@@ -1,33 +1,30 @@
 import React from "react";
 import NavBar from "../../Components/Users/NavBar";
+import Footer from "../../Components/Users/Footer";
 
 const userCategory = ({ category, articles }) => {
+  const category_id = category.id;
 
-  const category_id = category.id
-
-  // const filteredArticles = articles.filter(articles => articles.category_id === category_id)
-
-  console.log(articles)
   return (
     <>
       <NavBar />
-      <section>
+      <section className="bg-black text-white p-10">
         <h1>{category.name}</h1>
         <div>
           {articles.map((article, index) => {
             return (
-              <>
-                <div>
-                  <a href={`/blog/${article.slug}`}>
-                    <h4 key={index}>{article.title}</h4>
-                  </a>
-                </div>
-              </>
-            )
+              <div key={index} className="my-10">
+                <a href={`/blog/${article.slug}`}>
+                  <h4>{article.title}</h4>
+                </a>
+              </div>
+            );
           })}
         </div>
       </section>
+      <Footer />
     </>
-  )
-}
-export default userCategory
+  );
+};
+
+export default userCategory;

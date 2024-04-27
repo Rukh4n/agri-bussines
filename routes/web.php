@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Article;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,7 +27,10 @@ Route::get('/blog_kategori/{slug}', [CategoryController::class, 'show']);
 
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $new_articles = Article::orderBy('created_at')->get();
+    return Inertia::render('Dashboard', [
+        'new_articles' => $new_articles,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

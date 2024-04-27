@@ -6,7 +6,7 @@ const UserArticles = ({ articles, categories }) => {
     return (
         <>
             <NavBar />
-            <div className="grid mx-10 bg-black">
+            <div className="grid p-20 bg-black">
                 {articles.map((article, index) => {
                     const categoryId = article.category_id;
                     const categoryName = categories[categoryId]?.name;
@@ -15,7 +15,7 @@ const UserArticles = ({ articles, categories }) => {
                     return (
                         <div key={index} className="mb-4 p-4 rounded-lg"> 
                             <a href={`/blog/${article.slug}`}>
-                                <h1 className="text-white text-lg">{article.title}</h1>
+                                <h1 className="text-white text-4xl">{article.title}</h1>
                             </a>
                             <a href={`/blog_kategori/${categorySlug}`}>
                                 <p className="text-white text-xs">{categoryName}</p>
