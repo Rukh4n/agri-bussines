@@ -1,25 +1,28 @@
-import React from "react";
-import NavBar from "../Components/Users/NavBar";
-import Footer from "@/Components/Users/Footer";
-import Headers from "@/Components/Headers";
-import Services from "@/Components/Services";
-import NewArticles from "@/Components/NewArticles";
+import { Link, Head } from '@inertiajs/react';
+import MyGuestLayout from '@/GuestLayout/MyGuestLayout';
+import Headers from '@/Components/GuestComponents/headers';
+import NewsBanner from '@/Components/GuestComponents/NewsBanner';
+import ServicesBaner from '@/Components/GuestComponents/servicesBaner';
+import Mainpoint from '@/Components/GuestComponents/mainpoint';
+import SectionContenst from '@/Components/GuestComponents/sectionContenst';
+import NewNews from '@/Components/GuestComponents/newNews';
 
-const Welcome = ({ new_articles }) => {
-    console.log(new_articles);
+export default function Welcome({ auth, newNews}) {
+    
+    console.log(newNews)
     return (
-        <div className="min-h-screen bg-gray-800 text-white">
-            {/* Headr */}
-            <NavBar />
-            {/* endHeader */}
-
-            {/* Main contens */}
-            <Headers />
-            <Services />
-            <NewArticles />
-            <Footer />
-        </div>
+        <>
+            <Head title="Welcome" />
+            <MyGuestLayout>
+                <Headers />
+                <Mainpoint />
+                <ServicesBaner />
+                <SectionContenst />
+                <NewsBanner />
+                <NewNews
+                    newNews={newNews}
+                />
+            </MyGuestLayout>
+        </>
     );
-};
-
-export default Welcome;
+}
