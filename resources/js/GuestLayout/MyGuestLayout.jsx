@@ -1,5 +1,6 @@
 import React from 'react'
 import NavBar from '@/Components/GuestComponents/NavBar'
+import Footer from '@/Components/GuestComponents/footer'
 
 const MyGuestLayout = ({ children }) => {
     return (
@@ -8,6 +9,7 @@ const MyGuestLayout = ({ children }) => {
             <div>
                 {children}
             </div>
+            <Footer/>
         </>
     )
 }

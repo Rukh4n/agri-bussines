@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Inertia\Inertia;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
-use Inertia\Inertia;
-use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -16,11 +17,26 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(10);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
         return Inertia::render('Dashboard', [
             'posts' => $posts,
         ]);
     }
+
+    // admin search controller 
+    public function adminSearch(Request $request)
+    {
+        $search = $request->input('search'); // Mengambil input 'search'
+        $posts = Post::where('title', 'like', '%' . $search . '%')->get();
+
+        return Inertia::render('Admin/AdminSearch', [
+            'initialSearchQuery' => $search,
+            'initialSearchResults' => $posts,
+        ]);
+    }
+
+
+
 
     // New News to guest layout
     public function newNews(Request $request)
@@ -28,7 +44,7 @@ class PostController extends Controller
         $latestPosts = Post::latest()->take(8)->get();
 
         return response()->json([
-            'newNews' => $latestPosts,
+            'data' => $latestPosts,
         ]);
     }
 
@@ -48,6 +64,11 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
         $slug = Str::slug($request->title) . '-' . now()->format('YmdHis');
         $post = new Post();
         $post->title = $request->title;
@@ -58,7 +79,6 @@ class PostController extends Controller
         // Redirect ke dashboard
         return redirect()->route('dashboard')->with('success', 'Data berhasil disimpan!');
     }
-
 
     /**
      * Display the specified resource.
@@ -90,7 +110,6 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, $slug)
     {
-
         $post = Post::where('slug', $slug)->firstOrFail();
 
         $title = $request->title;
@@ -100,13 +119,14 @@ class PostController extends Controller
         $post->update([
             'title' => $title,
             'slug' => $slug,
-            'content' => $description,
+            'description' => $description, // Menggunakan 'description' bukan 'content'
         ]);
 
         // Redirect ke halaman dashboard setelah data berhasil di update
         return redirect('/dashboard')
             ->with('success', 'Data berhasil diperbarui!');
     }
+
 
     /**
      * Remove the specified resource from storage.

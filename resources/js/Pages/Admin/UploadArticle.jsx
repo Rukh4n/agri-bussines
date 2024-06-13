@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { router } from '@inertiajs/react';
-// import { Jodit } from 'jodit';
-// import HTMLReactParser from 'html-react-parser';
-
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const UploadArticle = ({ user, auth }) => {
   const [data, setData] = useState({
@@ -11,6 +10,8 @@ const UploadArticle = ({ user, auth }) => {
     slug: '',
     description: '',
   });
+
+  const [errors, setErrors] = useState({});
 
   const generateSlug = (title) => {
     return title
@@ -27,8 +28,22 @@ const UploadArticle = ({ user, auth }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simulate posting data to the server
-    router.post('upload-article-upload', data);
+    let newErrors = {};
+
+    if (!data.title) {
+      newErrors.title = 'Title is required';
+    }
+    if (!data.description) {
+      newErrors.description = 'Description is required';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      setErrors({});
+      // Simulate posting data to the server
+      router.post('upload-article-upload', data);
+    }
   };
 
   return (
@@ -50,23 +65,25 @@ const UploadArticle = ({ user, auth }) => {
               value={data.title}
               onChange={handleTitleChange}
               className="bg-black text-white border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+              required
             />
+            {errors.title && <p className="text-red-500 text-xs mt-2">{errors.title}</p>}
           </div>
           <div className="mb-4">
             <label htmlFor="description" className="block text-white text-sm font-bold mb-2">
               Deskripsi Artikel
             </label>
-            <textarea
-              name="description"
-              id="description"
-              placeholder="Tulis Deskripsi Artikel"
-              value={data.description}
-              onChange={(e) => setData({ ...data, description: e.target.value })}
+            <CKEditor
+              editor={ClassicEditor}
+              data={data.description}
+              onChange={(event, editor) => {
+                const newData = editor.getData();
+                setData({ ...data, description: newData });
+              }}
               className="bg-black text-white border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-              rows="4"
-            ></textarea>
+            />
+            {errors.description && <p className="text-red-500 text-xs mt-2">{errors.description}</p>}
           </div>
-          {/* <Jodit></Jodit> */}
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded focus:outline-none focus:shadow-outline"
@@ -75,7 +92,6 @@ const UploadArticle = ({ user, auth }) => {
           </button>
         </form>
       </div>
-
     </AuthenticatedLayout>
   );
 };

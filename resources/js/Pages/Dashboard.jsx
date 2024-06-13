@@ -3,8 +3,15 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
 
-export default function Dashboard({ auth, posts }) {
+export default function Dashboard({ auth, posts, meta }) {
+    
+    const next = posts.next_page_url ;
+    const current = posts.current_page ;
+    const prev_page = posts.prev_page_url ;
+    console.log(prev_page)
     const datas = posts.data;
+    console.log(posts)
+
 
     const handleDelete = (slug) => {
         router.delete(`/article/${slug}`);
@@ -47,6 +54,7 @@ export default function Dashboard({ auth, posts }) {
                         ))}
                     </tbody>
                 </table>
+                >
             </div>
         </AuthenticatedLayout>
     );

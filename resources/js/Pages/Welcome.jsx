@@ -7,8 +7,8 @@ import Mainpoint from '@/Components/GuestComponents/mainpoint';
 import SectionContenst from '@/Components/GuestComponents/sectionContenst';
 import NewNews from '@/Components/GuestComponents/newNews';
 
-export default function Welcome({ auth, newNews}) {
-    
+export default function Welcome({ auth, newNews }) {
+
     console.log(newNews)
     return (
         <>
@@ -19,9 +19,7 @@ export default function Welcome({ auth, newNews}) {
                 <ServicesBaner />
                 <SectionContenst />
                 <NewsBanner />
-                <NewNews
-                    newNews={newNews}
-                />
+                <NewNews />
             </MyGuestLayout>
         </>
     );
