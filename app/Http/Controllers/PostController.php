@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Category;
 
 class PostController extends Controller
 {
@@ -53,9 +54,11 @@ class PostController extends Controller
      */
     public function create()
     {
+        $categories = Category::all(); 
         $user = auth()->user();
         return Inertia::render('Admin/UploadArticle', [
             'user' => $user,
+            'categories' => $categories,
         ]);
     }
 
@@ -73,6 +76,7 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $request->title;
         $post->slug = $slug;
+        $post->category_id = $request->category_id;
         $post->description = $request->description;
         $post->save();
 
@@ -98,10 +102,11 @@ class PostController extends Controller
     {
         // Mengambil data post berdasarkan slug
         $post = Post::where('slug', $slug)->first();
-
+        $categories = Category::all();
         // Render halaman edit dengan data post
         return Inertia::render('Admin/EditPost', [
             'post' => $post,
+            'categories' => $categories,
         ]);
     }
 
@@ -114,11 +119,14 @@ class PostController extends Controller
 
         $title = $request->title;
         $slug = Str::slug($title) . '-' . now()->format('YmdHis');
+        $category_id = $request->category_id;
         $description = $request->description;
+
 
         $post->update([
             'title' => $title,
             'slug' => $slug,
+            'category_id' => $category_id,
             'description' => $description, // Menggunakan 'description' bukan 'content'
         ]);
 
